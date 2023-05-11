@@ -13,6 +13,9 @@ import './editor.scss';
 import Inspector from './inspector';
 import { softMinifyCssStrings } from '../../helper/softminify';
 
+import * as Constants from './constants';
+const { GRID_COLUMNS } = Constants;
+
 export default function Edit({ attributes, setAttributes, clientId }) {
 	const {
 		uniqueId,
@@ -29,16 +32,27 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 		}
 	}, []);
 
+	const deskCols = attributes[`${GRID_COLUMNS}DeskRange`];
+	const tabCols = attributes[`${GRID_COLUMNS}TabRange`];
+	const mobCols = attributes[`${GRID_COLUMNS}MobRange`];
+
+	console.log(deskCols);
+
 	const deskStyles = `
 		.${uniqueId} .bdt-title {
 			color: ${titleColor};
+			grid-column: ${deskCols};
 		}
 		.${uniqueId} .bdt-description {
 			color: ${descriptionColor};
 		}
 	`;
-	const tabStyles = ``;
-	const mobStyles = ``;
+	const tabStyles = `.${uniqueId} .bdt-title {
+		grid-column: ${tabCols};
+	}`;
+	const mobStyles = `.${uniqueId} .bdt-title {
+		grid-column: ${mobCols};
+	}`;
 
 	/**
 	 * Block All Styles
@@ -84,6 +98,8 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 					}
 					placeholder={__('Write description…', 'bdt-blocks')}
 				/>
+
+				<button id="clickme">Click Me</button>
 			</div>
 		</Fragment>
 	);

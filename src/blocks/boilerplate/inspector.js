@@ -3,7 +3,7 @@
  */
 import { __ } from '@wordpress/i18n';
 import { InspectorControls, PanelColorSettings } from '@wordpress/block-editor';
-import { PanelBody } from '@wordpress/components';
+import { PanelBody, TabPanel } from '@wordpress/components';
 
 /**
  * Internal dependencies
@@ -23,43 +23,65 @@ const Inspector = ({ attributes, setAttributes }) => {
 	const { titleColor, descriptionColor } = attributes;
 	const objAttrs = { attributes, setAttributes, objAttributes };
 
+	console.log(attributes);
+
 	return (
 		<div className="bdt-inspector-controls">
 			<InspectorControls>
-				{/* <ColorControl
-					label={__('Title Color', 'bdt-blocks')}
-					color={titleColor}
-					attrName="titleColor"
-					setAttributes={setAttributes}
-				/> */}
-				<PanelBody title={__('Column Settings', 'bdt-blocks')}>
-					<ResRangleControl
-						label={__('Grid Columns', 'bdt-blocks')}
-						controlName={GRID_COLUMNS}
-						objAttrs={objAttrs}
-						noUnits={false}
-						min={1}
-						max={4}
-					/>
-				</PanelBody>
-				<PanelColorSettings
-					title={__('Color Settings', 'bdt-blocks')}
-					initialOpen={false}
-					colorSettings={[
+				<TabPanel
+					className="my-tab-panel"
+					activeClass="active-tab"
+					tabs={[
 						{
-							value: titleColor,
-							onChange: (value) =>
-								setAttributes({ titleColor: value }),
-							label: __('Title Color', 'bdt-blocks'),
+							name: 'desk',
+							title: 'Desk',
+							className: 'desk-tab',
 						},
 						{
-							value: descriptionColor,
-							onChange: (value) =>
-								setAttributes({ descriptionColor: value }),
-							label: __('Description Color', 'bdt-blocks'),
+							name: 'tab',
+							title: 'Tab',
+							className: 'tab-tab',
+						},
+						{
+							name: 'mob',
+							title: 'Mob',
+							className: 'mob-tab',
 						},
 					]}
-				/>
+				>
+					{(tab) => {
+						if (tab.name === 'desk') {
+							return (
+								<>
+									<PanelBody
+										title={__(
+											'Column Settings',
+											'bdt-blocks'
+										)}
+									>
+										<ResRangleControl
+											label={__(
+												'Grid Columns',
+												'bdt-blocks'
+											)}
+											controlName={GRID_COLUMNS}
+											objAttrs={objAttrs}
+											noUnits={false}
+											min={1}
+											max={4}
+										/>
+									</PanelBody>
+								</>
+							);
+						}
+						if (tab.name === 'tab') {
+							return <>Hello Tab</>;
+						}
+						if (tab.name === 'mob') {
+							return <>sfsf</>;
+						}
+					}}
+				</TabPanel>
 			</InspectorControls>
 		</div>
 	);

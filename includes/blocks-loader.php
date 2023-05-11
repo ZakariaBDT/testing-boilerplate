@@ -57,8 +57,15 @@ class BDT_BLOCKS_LOADER {
             array('wp-block-editor', 'wp-blocks', 'wp-components', 'wp-data', 'wp-element', 'wp-i18n'),
             BDT_VERSION,
             true
+        ); 
+        
+        wp_enqueue_script(
+            'bdt-blocks-plugin-js',
+            BDT_ADMIN_URL . './includes/assets/js/plugin.js',
+            ['wp-block-editor', 'wp-blocks', 'wp-components', 'wp-data', 'wp-element', 'wp-i18n', 'jquery', 'wp-dom-ready', 'wp-edit-post'],
+            BDT_VERSION,
+            true
         );
-
     }
 
     /**
@@ -68,7 +75,6 @@ class BDT_BLOCKS_LOADER {
         if( ! is_admin() ){
             wp_enqueue_script( 'bdt-blocks-frontend', BDT_ADMIN_URL . './includes/assets/js/plugin.js', [], BDT_VERSION, true);
         }
-        
     }
 
     /**
